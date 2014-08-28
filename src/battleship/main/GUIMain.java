@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
-
 //this class exsists as static as it is the main entry point and controler for the entire program
 public class GUIMain extends Thread{
 	private static JFrame frame;
