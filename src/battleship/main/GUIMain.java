@@ -59,8 +59,8 @@ public class GUIMain extends Thread{
 		program.run();
 		
 		//starts the game, this will later be available though a menu
-		GUIGameStart game = new GUIGameStart();
-		game.start();
+		GUIMenu menu = new GUIMenu();
+		menu.start();
 	}
 
 }
