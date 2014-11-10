@@ -14,16 +14,15 @@ public class GUIMain extends Thread{
 	@Override
 	public void run() {
 		frame = new JFrame("Battle Ship");
-		
-		//this is a stupid solution
-		//spaces are dumb but spaces work
+				
+		//the spaces below are a /bad/ response to the text box for console simulated output not displaying correctly
 		textArea = new JTextArea("Welcome To BattleShip!                                \n");
 		scrollPane = new JScrollPane(textArea);
 		desktopPane = new JDesktopPane();
 		panel = new JPanel();
 		
 		//add the layout for the panel 
-		//add it to the frame and set param's for the fram
+		//add it to the frame and set param's for the frame
 		panel.setLayout(new BorderLayout());
 		frame.add(panel);
 		frame.setVisible(true);
