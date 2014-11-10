@@ -72,7 +72,7 @@ public class GUIShip {
 			GUIBoardMarker currentMarker;
 			switch(facing){
 				case EAST:
-					if (length + yxOrigin[1] - 1 < 9){
+					if (yxOrigin[1] + length - 2 < 9){
 						try {
 							for(int i = 0; i < length; i++){
 								changes.changeArray[i] = currentMarker = gb.getMarker(yxOrigin[1] + i, yxOrigin[0]);
@@ -85,7 +85,7 @@ public class GUIShip {
 					} else throw new ShipPlacementException("Ship { "+this.shipName+" } Does Not Fit in Grid");
 					break;
 				case WEST:
-					if (yxOrigin[1] - length + 1 > 0){
+					if (yxOrigin[1] - length + 2 > 0){
 						try {
 							for(int i = 0; i < length; i++){
 								changes.changeArray[i] = currentMarker = gb.getMarker(yxOrigin[1] - i, yxOrigin[0]);
@@ -98,7 +98,7 @@ public class GUIShip {
 					} else throw new ShipPlacementException("Ship { "+this.shipName+" } Does Not Fit in Grid");
 					break;
 				case NORTH:
-					if (yxOrigin[0] - length + 1 > 0){
+					if (yxOrigin[0] - length + 2 > 0){
 						try {
 							for(int i = 0; i < length; i++){
 								changes.changeArray[i] = currentMarker = gb.getMarker(yxOrigin[1], yxOrigin[0] - i);
@@ -111,7 +111,7 @@ public class GUIShip {
 					} else throw new ShipPlacementException("Ship { "+this.shipName+" } Does Not Fit in Grid");
 					break;
 				case SOUTH:
-					if (yxOrigin[0] + length - 1 < 9){
+					if (yxOrigin[0] + length - 2 < 9){
 						try {
 							for(int i = 0; i < length; i++){
 								changes.changeArray[i] = currentMarker = gb.getMarker(yxOrigin[1], yxOrigin[0] + i);
