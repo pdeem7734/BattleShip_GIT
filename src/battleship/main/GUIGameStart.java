@@ -30,7 +30,7 @@ public class GUIGameStart extends Thread{
 		player1.addToFrame(gridFrame);
 		
 		//starts the game 
-		playerInput = new GameState(player1, player2, this);
+		playerInput = new GameState(player1, player2);
 		playerInput.start();
 	}
 }
