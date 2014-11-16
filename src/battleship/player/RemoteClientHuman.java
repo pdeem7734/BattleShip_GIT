@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import battleship.main.*;
 
-public class ClientHuman extends Player {
+public class RemoteClientHuman extends Player {
 	
 	private BattleServer localServer;
 	
-	public ClientHuman(BattleServer localServer) {
+	public RemoteClientHuman(BattleServer localServer) {
 		this.localServer = localServer;
 	}
 	

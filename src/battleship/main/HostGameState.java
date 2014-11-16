@@ -16,7 +16,7 @@ public class HostGameState extends Thread {
 	public HostGameState(Player player1) throws IOException{
 		hostServer = new BattleServer();
 		this.player1 = player1;
-		this.player2 = new ClientHuman(hostServer);
+		this.player2 = new RemoteClientHuman(hostServer);
 		
 		this.player1.setOpponent(player2);
 		this.player2.setOpponent(player1);

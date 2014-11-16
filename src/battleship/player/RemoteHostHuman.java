@@ -1,6 +1,6 @@
 package battleship.player;
 
-public class HostHuman extends Player {
+public class RemoteHostHuman extends Player {
 
 	@Override
 	public void requestMove() {

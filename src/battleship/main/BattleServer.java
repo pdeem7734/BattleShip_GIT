@@ -70,7 +70,6 @@ public class BattleServer {
 			if (!clientString.equals("placed")) {
 				throw new Error("Remote Ship Placement Failed");
 			}
-			
 		} else {
 			throw new AssertionError("A client must be connected");
 		}
@@ -84,6 +83,14 @@ public class BattleServer {
 				//a client has connected to the server
 				client = server.accept();
 				System.out.println("Client Connected");
+				while (client.isConnected()) {
+					try {
+						Thread.sleep(1000);
+					} catch (Exception e) {
+						GUIMain.appendText("BattleServer has crashed\n");
+						System.out.println("BattleServer has crashed");
+					}
+				}
 			}
 		} catch (IOException e) {
 			
