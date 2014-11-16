@@ -48,7 +48,7 @@ public class GameState extends Thread{
 				currentPlayer.run();
 				turnQueue.put(currentPlayer);
 				if (currentPlayer.hasWon()){
-					GUIMain.appendText("Some One Won!");
+					GUIMain.appendText("Some One Won!\n");
 					break;
 				}
 			} catch (Exception e){
