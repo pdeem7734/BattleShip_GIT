@@ -43,6 +43,7 @@ public class HostGameState extends Thread {
 		player1.start();
 		player2.start();
 		
+		//waits for both players to complete placing their ships 
 		try {
 			player1.join();
 			player2.join();
@@ -50,6 +51,7 @@ public class HostGameState extends Thread {
 		
 		GUIMain.appendText("All players have placed their ships\n");
 		
+		//requests turns from both players and checks for win conditions.  
 		while (true){
 			try{
 				Player currentPlayer = turnQueue.take();

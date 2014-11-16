@@ -12,29 +12,34 @@ public class RemoteClientHuman extends Player {
 		this.localServer = localServer;
 	}
 	
-	//both of these methods will prompt the remote client to execute it's run, which will decide which task needs to be completed
+	
 	@Override
-	public void requestMove() {
-		Integer[] xyPos = new Integer[2];
+	public void requestMove() { //requests a move from the remote client
+		String xyPos = "";
 		try {
-			xyPos = localServer.requestRemotePlayerMove();
+			xyPos = localServer.requestFromRemote("startMove");
 		} catch (IOException e) {
 			GUIMain.appendText("Remote Player has disconnected\n");
 		}
 		
 		try {
-			hostilePlayer.hitMarker(xyPos[0], xyPos[1]);
+			hostilePlayer.hitMarker(Integer.parseInt(xyPos.split(",")[0]), Integer.parseInt(xyPos.split(",")[1]));
 		} catch (Exception e) {
 			GUIMain.appendText("Hostile Player Move Invalid\n");
 		}
 	}
 
 	@Override
-	public void requestPlaceShips() {
+	public void requestPlaceShips() { //requests that the remote client place a ship
+		String responce = "";
 		try {
-			localServer.requestRemotePlayerMove();
+			responce = localServer.requestFromRemote("placeShips");
 		} catch (IOException e) {
 			GUIMain.appendText("Remote Player has disconnected\n");
+		}
+		
+		if(!responce.equals("placed")) {
+			throw new Error ("Remote Placement Failed");
 		}
 	}
 

@@ -18,29 +18,27 @@ public class BattleServer {
 	private ServerSocketChannel server;
 	private SocketChannel client;
 	
-	private String clientString;
+	private String clientString = "";
 	
 	BattleServer() throws IOException {
+		//using basic ASCII encoding for this application
 		encoder = Charset.forName("US-ASCII").newEncoder();
 		decoder = Charset.forName("US-ASCII").newDecoder();
 		
+		//buffers to communicate on the socket 2kb should be more then we will ever use
 		clientBytes = ByteBuffer.allocateDirect(2048);
 		clientChar = CharBuffer.allocate(2048);
-		
-		server = ServerSocketChannel.open();
-		server.socket().bind(new java.net.InetSocketAddress(8000));
-		clientString = "";
 	}
 	
 	public boolean opponentConnected() {
 		return client.isConnected();
 	}
 	
-	//this is used to to request a move from the remote client. 
-	public Integer[] requestRemotePlayerMove() throws IOException {
-		Integer[] xyReturnValues = new Integer[2];
+	//String reponce for a remote request from the client 
+	public String requestFromRemote(String request) throws IOException {
+
 		if (client.isConnected()) {
-			client.write(encoder.encode((CharBuffer.wrap("startMove"))));
+			client.write(encoder.encode((CharBuffer.wrap(request))));
 			
 			client.read(clientBytes);
 			clientBytes.flip();
@@ -48,41 +46,29 @@ public class BattleServer {
 			clientChar.flip();
 			clientString = clientChar.toString();
 			
-			xyReturnValues[0] = Integer.parseInt(clientString.split(",")[0]);
-			xyReturnValues[1] = Integer.parseInt(clientString.split(",")[1]);
-			
-			return xyReturnValues;
+			return clientString;
 		} else {
 			throw new AssertionError("A client must be connected");
 		}
 	}
-	
-	public void requestRemotePlayerShipPlacement() throws IOException {
-		if (client.isConnected()) {
-			client.write(encoder.encode((CharBuffer.wrap("startMove"))));
-			
-			client.read(clientBytes);
-			clientBytes.flip();
-			decoder.decode(clientBytes, clientChar, true);
-			clientChar.flip();
-			clientString = clientChar.toString();
-			
-			if (!clientString.equals("placed")) {
-				throw new Error("Remote Ship Placement Failed");
-			}
-		} else {
-			throw new AssertionError("A client must be connected");
-		}
-	}
-	
+		
+	//this is the main server thread that waits for the client to connect
+	//it allso checks every second to ensure the remote player is still connected on the socket
 	public void run() {
 		try {
+			//starts the server connection on port 8000
+			server = ServerSocketChannel.open();
+			server.socket().bind(new java.net.InetSocketAddress(8000));
+			
+			//waits for a client to connect to the server
 			for(;;) {
 				System.out.println("Server waiting for connection");
 				
 				//a client has connected to the server
 				client = server.accept();
 				System.out.println("Client Connected");
+				
+				//monitors to ensure client remains connected 
 				while (client.isConnected()) {
 					try {
 						Thread.sleep(1000);
@@ -96,7 +82,8 @@ public class BattleServer {
 			
 		}
 	}
-
+	
+	//test method that will be removed from the class shortly
 	private void textInputValidation() throws IOException {
 		try {
 		main: for (;;) {
