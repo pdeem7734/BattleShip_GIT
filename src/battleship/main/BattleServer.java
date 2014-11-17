@@ -20,7 +20,7 @@ public class BattleServer {
 	
 	private String clientString = "";
 	
-	BattleServer() throws IOException {
+	BattleServer() {
 		//using basic ASCII encoding for this application
 		encoder = Charset.forName("US-ASCII").newEncoder();
 		decoder = Charset.forName("US-ASCII").newDecoder();
@@ -34,7 +34,7 @@ public class BattleServer {
 		return client.isConnected();
 	}
 	
-	//String reponce for a remote request from the client 
+	//String response for a remote request from the client 
 	public String requestFromRemote(String request) throws IOException {
 
 		if (client.isConnected()) {
@@ -53,7 +53,7 @@ public class BattleServer {
 	}
 		
 	//this is the main server thread that waits for the client to connect
-	//it allso checks every second to ensure the remote player is still connected on the socket
+	//it also checks every second to ensure the remote player is still connected on the socket
 	public void run() {
 		try {
 			//starts the server connection on port 8000

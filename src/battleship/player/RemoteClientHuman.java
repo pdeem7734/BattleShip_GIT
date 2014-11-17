@@ -38,6 +38,7 @@ public class RemoteClientHuman extends Player {
 			GUIMain.appendText("Remote Player has disconnected\n");
 		}
 		
+		//From here is where we will need to instantiate and place each ship to match from client and host
 		if(!responce.equals("placed")) {
 			throw new Error ("Remote Placement Failed");
 		}

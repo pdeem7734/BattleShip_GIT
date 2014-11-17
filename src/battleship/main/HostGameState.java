@@ -36,7 +36,7 @@ public class HostGameState extends Thread {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {} //doing nothing with this presently 
 		}
-		GUIMain.appendText("Opponent has connected");
+		GUIMain.appendText("Opponent has connected\n");
 		
 		//requests both players place their ships		
 		GUIMain.appendText("Please place your ships!\n");
@@ -58,6 +58,7 @@ public class HostGameState extends Thread {
 				currentPlayer.run();
 				turnQueue.put(currentPlayer);
 				if (currentPlayer.hasWon()){
+					hostServer.requestFromRemote("gameOver");
 					GUIMain.appendText("Some One Won!\n");
 					break;
 				}

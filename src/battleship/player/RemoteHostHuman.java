@@ -14,15 +14,23 @@ public class RemoteHostHuman extends Player {
 	@Override
 	public void requestMove() {
 		// TODO Auto-generated method stub
-		throw new AssertionError("Meaningless Meathod, placement controled by host");
+		throw new AssertionError("Meaningless Meathod, move controled by host");
 	}
 	@Override
 	public void requestPlaceShips() {
 		// TODO Auto-generated method stub
-		throw new AssertionError("Meaningless Meathod, move controled by host");
+		throw new AssertionError("Meaningless Meathod, placement controled by host");
 	}
 	
-    //overridding the default hit placement to communicate to the host where a hit was placed. 
+	public void makeMove(Integer xPos, Integer yPos) {
+		try {
+			hostilePlayer.hitMarker(xPos, yPos);
+		} catch (Exception e) {
+			//doing nothing with this currently
+		}
+	}
+	
+    //Overriding the default hit placement to communicate to the host where a hit was placed. 
 	@Override
     public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{ 
 		 return myBoard.hitMarker(xPos, yPos);
