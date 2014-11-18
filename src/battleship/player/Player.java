@@ -57,9 +57,15 @@ public abstract class Player extends Thread{
     	 frame.add(myBoard);
      }
      
-     //returns ships stored by player. 
-     public GUIShip[] getShips() {
-    	 return ships;
+     //returns a string value for the ships the player has.
+     //ships will be separated by a '|'
+     public String getShipsString() {
+    	 StringBuffer returnBuffer = new StringBuffer();
+    	 
+    	 for(GUIShip ship: ships) {
+    		 returnBuffer.append(ship.toString() + "|");
+    	 }
+    	 return returnBuffer.toString();
      }
      
      public void addAsHostile(JInternalFrame frame){
