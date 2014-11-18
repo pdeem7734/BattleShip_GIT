@@ -49,6 +49,13 @@ public class HostGameState extends Thread {
 			player2.join();
 		} catch (InterruptedException e) {} //doing nothing with this currently
 		
+		//Adds the ships from host client to the remote client
+		try {
+			hostServer.requestFromRemote("updateBoard:" + player1.getShipsString());
+		} catch(IOException e) {
+			GUIMain.appendText("Remote client disconneted ");
+		}
+		
 		GUIMain.appendText("All players have placed their ships\n");
 		
 		//requests turns from both players and checks for win conditions.  

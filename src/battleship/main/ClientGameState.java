@@ -51,12 +51,19 @@ public class ClientGameState extends Thread {
 		try {
 			host = SocketChannel.open(new InetSocketAddress(hostAddress, 8000));
 			GUIMain.appendText("Connected to host game.\nWaiting for host to start game.\n");
-			
+			String[] request;
 			main: for (;;) {
-				switch(getServerRequest()) {
+				request = getServerRequest().split(":");
+				switch(request[0]) {
+				case "updateBoard":
+					//Add hostile ships to this board
+					player2.addAllShips(request[1]);
+					break;
 				case "hostMove":
+					//Update a move from host
 					break;
 				case "startMove":
+					//Request the this player make a move
 					player1.run();
 					break;
 				case "placeShips":

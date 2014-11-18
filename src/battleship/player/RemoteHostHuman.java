@@ -32,7 +32,9 @@ public class RemoteHostHuman extends Player {
 	
     //Overriding the default hit placement to communicate to the host where a hit was placed. 
 	@Override
-    public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{ 
-		 return myBoard.hitMarker(xPos, yPos);
+    public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{
+		GUIShip returnShip = myBoard.hitMarker(xPos, yPos);
+		
+		return returnShip;
     }
 }

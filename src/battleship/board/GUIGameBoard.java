@@ -121,16 +121,14 @@ public class GUIGameBoard extends JPanel{
 				if (hostileBoard.boardGrid[i][k] == button){
 					try {
 						//oButton here represents the friendly board grid
-						GUIBoardMarker oButton = this.boardGrid[i][k];
-						GUIShip tempShip = oButton.hitMarker();
-						button.hitMarker();
+						GUIShip tempShip = hitMarker(k, i);
+						
 						GUIMain.appendText("Hit at (" + k + "," + i+ ")\n");
 						
 						if (tempShip != null && tempShip.isShipSunk()){
 							GUIMain.appendText(tempShip.shipName + " Has Been Sunk\n");
 						}
 						
-						button.setText(this.boardGrid[i][k].toString());
 						this.lockHostileBoard();
 					} catch (Exception e){
 						//doing nothing with this currently
