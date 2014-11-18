@@ -1,6 +1,7 @@
 package battleship.board;
 
 public class GUIShip {
+
 	// length of ship
 	private int length;
 	
@@ -27,12 +28,23 @@ public class GUIShip {
 		hit = new boolean[length];
 	}
 	
+	//returns comma separated representation of this ship
+	public String toString() {
+		StringBuffer returnBuffer = new StringBuffer();
+		returnBuffer.append(length + ",");
+		returnBuffer.append(facing + ",");
+		returnBuffer.append(yxOrigin[0] + ",");
+		returnBuffer.append(yxOrigin[1] + ",");
+		returnBuffer.append(shipName + ",");
+		returnBuffer.append(isSunk + ",");
+		
+		return returnBuffer.toString();		
+	}
 	//only a marker should ever call this, but it will hit the ship at the given
 	//position and return true if this results in the ship being sunk
 	public boolean hitShipAt(int position){
 		this.hit[position] = true;
 		return this.isShipSunk();
-		
 	}
 	
 	//returns the sunk status of the ship

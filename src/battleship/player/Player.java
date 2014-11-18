@@ -57,6 +57,11 @@ public abstract class Player extends Thread{
     	 frame.add(myBoard);
      }
      
+     //returns ships stored by player. 
+     public GUIShip[] getShips() {
+    	 return ships;
+     }
+     
      public void addAsHostile(JInternalFrame frame){
     	 frame.add(myBoard.getHostileBoard());
      }
