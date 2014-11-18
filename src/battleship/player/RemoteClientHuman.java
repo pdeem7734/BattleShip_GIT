@@ -1,7 +1,9 @@
 package battleship.player;
 
 import java.io.IOException;
+import java.util.*;
 
+import battleship.board.*;
 import battleship.main.*;
 
 public class RemoteClientHuman extends Player {
@@ -42,6 +44,26 @@ public class RemoteClientHuman extends Player {
 		if(!responce.equals("placed")) {
 			throw new Error ("Remote Placement Failed");
 		}
+		
+		
+		String[] shipStrings = responce.split("|");
+		ArrayList<GUIShip> arrayListShips = new ArrayList<GUIShip>();
+		for (String shipString : shipStrings) {
+			String[] temp = shipString.split(",");
+			int[] yxPos = new int[2];
+			yxPos[0] = Integer.parseInt(temp[2]);
+			yxPos[1] = Integer.parseInt(temp[3]);
+			arrayListShips.add(new GUIShip(Integer.parseInt(temp[0]), GUIShip.Orientation.valueOf(temp[1]), yxPos, temp[4]));
+		}
+		
+		ships = arrayListShips.toArray(new GUIShip[arrayListShips.size() -1]);
+		
+		for(GUIShip ship:ships) {
+			try {
+			ship.placeShip(myBoard);
+			} catch (Exception e) {
+				//this should never occur as the remote client should have run the same rule checks. 
+			}
+		}
 	}
-
 }

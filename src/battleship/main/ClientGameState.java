@@ -68,7 +68,7 @@ public class ClientGameState extends Thread {
 						//doing nothing with this as it shouldn't be interupted
 					} 
 					//lets the host know that the ships have been placed. 
-					respondToRemoteHost("placed");
+					respondToRemoteHost(player1.getShipsString());
 					break;
 				case "gameOver":
 					break main;
