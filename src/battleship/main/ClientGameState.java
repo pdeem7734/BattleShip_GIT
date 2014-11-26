@@ -12,9 +12,8 @@ import battleship.player.*;
 public class ClientGameState extends Thread {
 	String hostAddress;
 	
-	//Player 1 denotes the local player while player two is the remote
-	Player player1;
-	Player player2;
+	Player localPlayer;
+	Player remotePlayer;
 	
 	//create the encoder and decoder
 	private CharsetEncoder encoder;
@@ -30,11 +29,11 @@ public class ClientGameState extends Thread {
 	public ClientGameState(Player player1, String hostAddress) {
 		this.hostAddress = hostAddress;
 		
-		this.player1 = player1;
-		this.player2 = new RemoteHostHuman(this);
+		this.localPlayer = player1;
+		this.remotePlayer = new RemoteHostHuman(this);
 		
-		this.player1.setOpponent(player2);
-		this.player2.setOpponent(this.player1);
+		this.localPlayer.setOpponent(remotePlayer);
+		this.remotePlayer.setOpponent(this.localPlayer);
 		
 		//using basic ASCII encoding for this application
 		encoder = Charset.forName("US-ASCII").newEncoder();
@@ -57,25 +56,31 @@ public class ClientGameState extends Thread {
 				switch(request[0]) {
 				case "updateBoard":
 					//Add hostile ships to this board
-					player2.addAllShips(request[1]);
+					remotePlayer.addAllShips(request[1]);
 					break;
 				case "hostMove":
 					//Update a move from host
+					try {
+						localPlayer.hitMarker(Integer.parseInt(request[1].split(",")[0]), Integer.parseInt(request[1].split(",")[1]));
+					} catch (Exception e) {
+						GUIMain.appendText("Remote Host Made an Invalid Move\n");
+					}
+					respondToRemoteHost("updatedBoard");
 					break;
 				case "startMove":
 					//Request the this player make a move
-					player1.run();
+					localPlayer.run();
 					break;
 				case "placeShips":
 					//starts the request for the player to place their ships
-					player1.start();
+					localPlayer.start();
 					try {
-						player1.join();
+						localPlayer.join();
 					} catch (Exception e) {
 						//doing nothing with this as it shouldn't be interupted
 					} 
 					//lets the host know that the ships have been placed. 
-					respondToRemoteHost(player1.getShipsString());
+					respondToRemoteHost(localPlayer.getShipsString());
 					break;
 				case "gameOver":
 					break main;

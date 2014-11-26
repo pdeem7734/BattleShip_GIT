@@ -1,5 +1,7 @@
 package battleship.player;
 
+import java.io.IOException;
+
 import battleship.board.GUIBoardMarker;
 import battleship.board.GUIShip;
 import battleship.main.*;
@@ -34,7 +36,11 @@ public class RemoteHostHuman extends Player {
 	@Override
     public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{
 		GUIShip returnShip = myBoard.hitMarker(xPos, yPos);
-		
+		try {
+			gameStateControl.respondToRemoteHost(xPos + "," + yPos);
+		} catch (IOException e) {
+			GUIMain.appendText("Remote Host disconnected\n");
+		}
 		return returnShip;
     }
 }

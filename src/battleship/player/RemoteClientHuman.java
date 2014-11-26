@@ -47,4 +47,19 @@ public class RemoteClientHuman extends Player {
 		
 		addAllShips(responce);
 	}
+	
+	
+	@Override
+    public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{
+		GUIShip returnShip = myBoard.hitMarker(xPos, yPos);
+		try {
+			String response = localServer.requestFromRemote("hostMove:" + xPos + "," + yPos);
+			if (!response.equals("updatedBoard")) {
+				throw new Error("Invalid Response from Client");
+			}
+		} catch (IOException e) {
+			GUIMain.appendText("Remote Host disconnected\n");
+		}
+		return returnShip;
+    }
 }
