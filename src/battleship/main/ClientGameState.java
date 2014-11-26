@@ -57,6 +57,11 @@ public class ClientGameState extends Thread {
 				case "updateBoard":
 					//Add hostile ships to this board
 					remotePlayer.addAllShips(request[1]);
+					try {
+						respondToRemoteHost("updatedBoard");
+					} catch (IOException e) {
+						GUIMain.appendText("Remote host Invalid Placement\n");
+					}
 					break;
 				case "hostMove":
 					//Update a move from host
