@@ -106,7 +106,7 @@ public class GUIGameBoard extends JPanel{
 					try {
 						//this logic will never really be run.
 						//button here represents the friendly board gird
-						hitMarker(k, i);
+						playerOwner.hitMarker(k, i);
 						hostileBoard.lockHostileBoard();
 						return;
 					} catch (Exception e){
@@ -122,7 +122,7 @@ public class GUIGameBoard extends JPanel{
 				if (hostileBoard.boardGrid[i][k] == button){
 					try {
 						//oButton here represents the friendly board grid
-						GUIShip tempShip = hitMarker(k, i);
+						GUIShip tempShip = playerOwner.hitMarker(k, i);
 						GUIMain.appendText("Hit at (" + k + "," + i+ ")\n");
 						
 						if (tempShip != null && tempShip.isShipSunk()){
