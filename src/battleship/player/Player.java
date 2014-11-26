@@ -15,7 +15,7 @@ public abstract class Player extends Thread{
      
      //constructor creates a game board by default
      public Player(){
-    	 myBoard = new GUIGameBoard();
+    	 myBoard = new GUIGameBoard(this);
      }
      
      //creates a new game board for this player

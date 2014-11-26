@@ -2,9 +2,11 @@ package battleship.board;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import battleship.main.GUIMain;
+import battleship.player.Player;
 
 @SuppressWarnings("serial")
 public class GUIGameBoard extends JPanel{
@@ -12,9 +14,11 @@ public class GUIGameBoard extends JPanel{
 	//this is stored in [y][x]
 	GUIBoardMarker[][] boardGrid = new GUIBoardMarker[10][10];	
 	HostileGUIGameBoard hostileBoard;
+	Player playerOwner;
 	private boolean isLocked;
 	
-	public GUIGameBoard(){
+	public GUIGameBoard(Player playerOwner){
+		this.playerOwner = playerOwner;
 		this.setLayout(new GridLayout(10,10));
 		this.setSize(800,800);
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -28,7 +32,7 @@ public class GUIGameBoard extends JPanel{
 	public void generateNewGrid() {
 		//generates a new grid
 		//for both the hostile  and the current grid
-		hostileBoard = new HostileGUIGameBoard(this);
+		hostileBoard = new HostileGUIGameBoard(playerOwner);
 		ActionListener actionListener = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent actionEvent){
@@ -158,7 +162,8 @@ public class GUIGameBoard extends JPanel{
 	
 	//this works surprisingly well...
 	static private class HostileGUIGameBoard extends GUIGameBoard{	
-		public HostileGUIGameBoard(GUIGameBoard baseBoard){
+		public HostileGUIGameBoard(Player playerOwner){
+			super(playerOwner);
 		}
 	}
 	
