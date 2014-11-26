@@ -38,7 +38,7 @@ public class Human extends Player{
 			JPanel yLabelPanel;
 			
 			JButton xUpButton;
-			JButton xDownButton; 			
+			JButton xDownButton; 
 			JButton yUpButton;
 			JButton yDownButton;
 			

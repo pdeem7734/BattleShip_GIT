@@ -26,7 +26,7 @@ public class GUIMenu extends Thread{
 		ActionListener startListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				  startGame();
+				startGame();
 			}
 		};
 		startButton.addActionListener(startListener);

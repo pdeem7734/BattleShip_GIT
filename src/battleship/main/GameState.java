@@ -11,7 +11,7 @@ public class GameState extends Thread{
 	//the current turn order
 	ArrayBlockingQueue<Player> turnQueue = new ArrayBlockingQueue<Player>(3);
 	
-	//initilize the game state
+	//Initialize the game state
 	public GameState(Player player1, Player player2){
 		this.player1 = player1;
 		this.player2 = player2;

@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
-//this class exsists as static as it is the main entry point and controler for the entire program
+//this class exists as static as it is the main entry point and controller for the entire program
 public class GUIMain extends Thread{
 	private static JFrame frame;
 	private static JPanel panel;
@@ -57,7 +57,7 @@ public class GUIMain extends Thread{
 		GUIMain program = new GUIMain();
 		program.run();
 		
-		//starts the game, this will later be available though a menu
+		//starts the menu for the game 
 		GUIMenu menu = new GUIMenu();
 		menu.start();
 	}
