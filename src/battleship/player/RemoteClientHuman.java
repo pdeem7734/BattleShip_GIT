@@ -48,7 +48,6 @@ public class RemoteClientHuman extends Player {
 		addAllShips(responce);
 	}
 	
-	
 	@Override
     public GUIShip hitMarker(int xPos, int yPos) throws GUIBoardMarker.HitMarkerException{
 		GUIShip returnShip = myBoard.hitMarker(xPos, yPos);

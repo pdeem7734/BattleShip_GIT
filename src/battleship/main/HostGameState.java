@@ -6,8 +6,8 @@ import java.io.*;
 import battleship.player.*;
 
 public class HostGameState extends Thread {
-	private Player player1;
-	private Player player2;
+	private Player localPlayer;
+	private Player remotePlayer;
 	
 	private BattleServer hostServer; 
 	
@@ -15,14 +15,14 @@ public class HostGameState extends Thread {
 	
 	public HostGameState(Player player1) throws IOException{
 		hostServer = new BattleServer();
-		this.player1 = player1;
-		this.player2 = new RemoteClientHuman(hostServer);
+		this.localPlayer = player1;
+		this.remotePlayer = new RemoteClientHuman(hostServer);
 		
-		this.player1.setOpponent(player2);
-		this.player2.setOpponent(player1);
+		this.localPlayer.setOpponent(remotePlayer);
+		this.remotePlayer.setOpponent(player1);
 		
-		turnQueue.add(this.player1);
-		turnQueue.add(this.player2);
+		turnQueue.add(this.localPlayer);
+		turnQueue.add(this.remotePlayer);
 	}
 	
 	public void run() {
@@ -40,18 +40,20 @@ public class HostGameState extends Thread {
 		
 		//requests both players place their ships		
 		GUIMain.appendText("Please place your ships!\n");
-		player1.start();
-		player2.start();
+		localPlayer.start();
+		remotePlayer.start();
 		
 		//waits for both players to complete placing their ships 
 		try {
-			player1.join();
-			player2.join();
+			localPlayer.join();
+			remotePlayer.join();
 		} catch (InterruptedException e) {} //doing nothing with this currently
 		
 		//Adds the ships from host client to the remote client
+		//and vice versa
 		try {
-			hostServer.requestFromRemote("updateBoard:" + player1.getShipsString());
+			String remoteShips = hostServer.requestFromRemote("updateBoard:" + localPlayer.getShipsString());
+			remotePlayer.addAllShips(remoteShips);
 		} catch(IOException e) {
 			GUIMain.appendText("Remote client disconneted ");
 		}
