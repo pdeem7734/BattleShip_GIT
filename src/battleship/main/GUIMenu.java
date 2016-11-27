@@ -7,9 +7,7 @@ import java.awt.*;
 
 public class GUIMenu extends Thread{
 	private JInternalFrame frame;
-	private JButton startButton;
-	private JButton exitButton;
-	
+
 	//main run command 
 	@Override
 	public void run() {
@@ -19,9 +17,9 @@ public class GUIMenu extends Thread{
 		frame.setVisible(true);
 		frame.setResizable(true);
 		frame.setSize(200,100);
-		
-		startButton = new JButton("Start Game");
-		exitButton = new JButton("Exit Game");
+
+		JButton startButton = new JButton("Start Game");
+		JButton exitButton = new JButton("Exit Game");
 		
 		ActionListener startListener = new ActionListener() {
 			@Override

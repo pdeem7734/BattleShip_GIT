@@ -12,27 +12,27 @@ import battleship.player.Player;
 public class GUIGameBoard extends JPanel{
 	
 	//this is stored in [y][x]
-	GUIBoardMarker[][] boardGrid = new GUIBoardMarker[10][10];	
-	HostileGUIGameBoard hostileBoard;
-	Player playerOwner;
+	private GUIBoardMarker[][] boardGrid = new GUIBoardMarker[10][10];
+	private HostileGUIGameBoard hostileBoard;
+	private Player playerOwner;
 	private boolean isLocked;
 	
 	public GUIGameBoard(Player playerOwner){
-		this.playerOwner = playerOwner;
+		this.setPlayerOwner(playerOwner);
 		this.setLayout(new GridLayout(10,10));
 		this.setSize(800,800);
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		this.setVisible(true);
 		if (!(this instanceof HostileGUIGameBoard)){			
 			generateNewGrid();
-			isLocked = false;
+			setIsLocked(false);
 		}
 	}
 	
 	public void generateNewGrid() {
 		//generates a new grid
 		//for both the hostile  and the current grid
-		hostileBoard = new HostileGUIGameBoard(playerOwner);
+		setHostileBoard(new HostileGUIGameBoard(getPlayerOwner()));
 		ActionListener actionListener = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent actionEvent){
@@ -49,7 +49,7 @@ public class GUIGameBoard extends JPanel{
 			for (int k =0; k<10 ; k++){
 				//adds the friendly button
 				GUIBoardMarker button = new GUIBoardMarker();
-				boardGrid[i][k] = button;					
+				getBoardGrid()[i][k] = button;
 				button.addActionListener(actionListener);
 				this.add(button);
 				
@@ -59,9 +59,9 @@ public class GUIGameBoard extends JPanel{
 				
 				//adds the hostile button to the hostile board 
 				GUIBoardMarker hostileButton = new GUIBoardMarker();
-				hostileBoard.boardGrid[i][k] = hostileButton;
+				getHostileBoard().getBoardGrid()[i][k] = hostileButton;
 				hostileButton.addActionListener(actionListener);
-				hostileBoard.add(hostileButton);
+				getHostileBoard().add(hostileButton);
 				hostileButton.setEnabled(false);
 			}
 		}
@@ -71,25 +71,25 @@ public class GUIGameBoard extends JPanel{
 	public void unlockHostileBoard(){
 		for (int i = 0; i < 10; i++ ){
 			for (int k =0; k<10 ; k++){
-				if(!this.hostileBoard.boardGrid[i][k].getText().equals("H") && 
-						!this.hostileBoard.boardGrid[i][k].getText().equals("M")){
-					this.hostileBoard.boardGrid[i][k].setEnabled(true);
+				if(!this.getHostileBoard().getBoardGrid()[i][k].getText().equals("H") &&
+						!this.getHostileBoard().getBoardGrid()[i][k].getText().equals("M")){
+					this.getHostileBoard().getBoardGrid()[i][k].setEnabled(true);
 					
 				}
 			}
 		}
-		isLocked = false;
+		setIsLocked(false);
 	}
 	
 	//unlocks buttons on the board to accept player input
 	public void lockHostileBoard(){
 		for (int i = 0; i < 10; i++ ){
 			for (int k =0; k<10 ; k++){
-				this.hostileBoard.boardGrid[i][k].setEnabled(false);
+				this.getHostileBoard().getBoardGrid()[i][k].setEnabled(false);
 				
 			}
 		}
-		isLocked = true;
+		setIsLocked(true);
 	}
 	
 	public boolean isLocked() {
@@ -102,12 +102,12 @@ public class GUIGameBoard extends JPanel{
 		this.setEnabled(false);
 		for (int i = 0; i < 10; i++ ){
 			for (int k =0; k<10 ; k++){
-				if (boardGrid[i][k] == button){
+				if (getBoardGrid()[i][k] == button){
 					try {
 						//this logic will never really be run.
 						//button here represents the friendly board gird
-						playerOwner.hitMarker(k, i);
-						hostileBoard.lockHostileBoard();
+						getPlayerOwner().hitMarker(k, i);
+						getHostileBoard().lockHostileBoard();
 						return;
 					} catch (Exception e){
 						//doing nothing with it for the time being 
@@ -119,10 +119,10 @@ public class GUIGameBoard extends JPanel{
 		//locate it and update both views. 
 		for (int i = 0; i < 10; i++ ){
 			for (int k =0; k<10 ; k++){
-				if (hostileBoard.boardGrid[i][k] == button){
+				if (getHostileBoard().getBoardGrid()[i][k] == button){
 					try {
 						//oButton here represents the friendly board grid
-						GUIShip tempShip = playerOwner.hitMarker(k, i);
+						GUIShip tempShip = getPlayerOwner().hitMarker(k, i);
 						GUIMain.appendText("Hit at (" + k + "," + i+ ")\n");
 						
 						if (tempShip != null && tempShip.isShipSunk()){
@@ -141,15 +141,15 @@ public class GUIGameBoard extends JPanel{
 	
 	
 	GUIBoardMarker getMarker(int xpos, int ypos){
-		return boardGrid[ypos][xpos];
+		return getBoardGrid()[ypos][xpos];
 	}
 	
 	//this is only called by the AI to imitate a button click
 	public GUIShip hitMarker(int xpos, int ypos) throws GUIBoardMarker.HitMarkerException{
 		try {
-			GUIShip temp = boardGrid[ypos][xpos].hitMarker();
-			hostileBoard.boardGrid[ypos][xpos].hitMarker();
-			hostileBoard.boardGrid[ypos][xpos].setText(boardGrid[ypos][xpos].toString());
+			GUIShip temp = getBoardGrid()[ypos][xpos].hitMarker();
+			getHostileBoard().getBoardGrid()[ypos][xpos].hitMarker();
+			getHostileBoard().getBoardGrid()[ypos][xpos].setText(getBoardGrid()[ypos][xpos].toString());
 			return temp;
 		} catch (ArrayIndexOutOfBoundsException e){
 			throw new GUIBoardMarker.HitMarkerException("Invalid GRID");
@@ -159,7 +159,31 @@ public class GUIGameBoard extends JPanel{
 	public HostileGUIGameBoard getHostileBoard(){
 		return hostileBoard;
 	}
-	
+
+	GUIBoardMarker[][] getBoardGrid() {
+		return boardGrid;
+	}
+
+	void setBoardGrid(GUIBoardMarker[][] boardGrid) {
+		this.boardGrid = boardGrid;
+	}
+
+	void setHostileBoard(HostileGUIGameBoard hostileBoard) {
+		this.hostileBoard = hostileBoard;
+	}
+
+	Player getPlayerOwner() {
+		return playerOwner;
+	}
+
+	void setPlayerOwner(Player playerOwner) {
+		this.playerOwner = playerOwner;
+	}
+
+	void setIsLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+
 	//this works surprisingly well...
 	static private class HostileGUIGameBoard extends GUIGameBoard{	
 		public HostileGUIGameBoard(Player playerOwner){
@@ -174,16 +198,16 @@ public class GUIGameBoard extends JPanel{
 			for (int x = 0; x < length; x++){
 				switch (orientation){
 				case NORTH:
-					boardGrid[xyPosition[1] - x][xyPosition[0]].setBackground(new Color(0,255,0));
+					getBoardGrid()[xyPosition[1] - x][xyPosition[0]].setBackground(new Color(0,255,0));
 					break;
 				case SOUTH:
-					boardGrid[xyPosition[1] + x][xyPosition[0]].setBackground(new Color(0,255,0));
+					getBoardGrid()[xyPosition[1] + x][xyPosition[0]].setBackground(new Color(0,255,0));
 					break;
 				case EAST:
-					boardGrid[xyPosition[1]][xyPosition[0] + x].setBackground(new Color(0,255,0));
+					getBoardGrid()[xyPosition[1]][xyPosition[0] + x].setBackground(new Color(0,255,0));
 					break;
 				case WEST:
-					boardGrid[xyPosition[1]][xyPosition[0] - x].setBackground(new Color(0,255,0));
+					getBoardGrid()[xyPosition[1]][xyPosition[0] - x].setBackground(new Color(0,255,0));
 					break;
 				}
 			}
@@ -195,7 +219,7 @@ public class GUIGameBoard extends JPanel{
 		//revert all prior colors 
 		for (int i = 0; i < 10; i++ ){
 			for (int k =0; k<10 ; k++){
-				boardGrid[i][k].setBackground(hostileBoard.getBackground());
+				getBoardGrid()[i][k].setBackground(getHostileBoard().getBackground());
 			}
 		}
 	}

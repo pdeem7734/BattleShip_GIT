@@ -6,27 +6,25 @@ import javax.swing.*;
 
 //this class exists as static as it is the main entry point and controller for the entire program
 public class GUIMain extends Thread{
-	private static JFrame frame;
-	private static JPanel panel;
 	private static JDesktopPane desktopPane;
 	private static JTextArea textArea;
-	private static JScrollPane scrollPane;
+
 	@Override
 	public void run() {
-		frame = new JFrame("Battle Ship");
+		JFrame frame = new JFrame("Battle Ship");
 				
 		//the spaces below are a /bad/ response to the text box for console simulated output not displaying correctly
 		textArea = new JTextArea("Welcome To BattleShip!                                \n");
-		scrollPane = new JScrollPane(textArea);
+		JScrollPane scrollPane = new JScrollPane(textArea);
 		desktopPane = new JDesktopPane();
-		panel = new JPanel();
+		JPanel panel = new JPanel();
 		
 		//add the layout for the panel 
 		//add it to the frame and set param's for the frame
 		panel.setLayout(new BorderLayout());
 		frame.add(panel);
 		frame.setVisible(true);
-		frame.setSize(1000,1000);
+		frame.setSize(1000, 1000);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

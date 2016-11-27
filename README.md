@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 BattleShip_GIT
 ==============
 
@@ -20,6 +19,4 @@ Entry point into application is battleship.main.GUIMain.java
 Goal of project: 
  - Create a basic AI
  - Implement understandable GUI with swing
- - Create Multiplayer funcationality though a host and client setup
-
->>>>>>> refs/remotes/origin/master
+ - Create Multi-player functionality though a host and client setup

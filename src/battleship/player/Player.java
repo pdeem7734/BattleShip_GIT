@@ -7,10 +7,10 @@ import battleship.board.*;
 import javax.swing.*;
 
 public abstract class Player extends Thread{
-	 GUIShip[] ships;
-	 boolean hasPlacedShips;
-     GUIGameBoard myBoard;
-     Player hostilePlayer;
+	 protected GUIShip[] ships;
+	 protected boolean hasPlacedShips;
+     protected GUIGameBoard myBoard;
+     protected Player hostilePlayer;
      
      
      //constructor creates a game board by default
@@ -99,5 +99,5 @@ public abstract class Player extends Thread{
      }
      //requests that the player makes their move on the board
      abstract public void requestMove();
-     abstract public void requestPlaceShips();  
+     abstract public void requestPlaceShips();
 }

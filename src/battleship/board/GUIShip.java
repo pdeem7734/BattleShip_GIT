@@ -30,15 +30,15 @@ public class GUIShip {
 	
 	//returns comma separated representation of this ship
 	public String toString() {
-		StringBuffer returnBuffer = new StringBuffer();
-		returnBuffer.append(length + ",");
-		returnBuffer.append(facing + ",");
-		returnBuffer.append(yxOrigin[0] + ",");
-		returnBuffer.append(yxOrigin[1] + ",");
-		returnBuffer.append(shipName + ",");
-		returnBuffer.append(isSunk + ",");
-		
-		return returnBuffer.toString();		
+		StringBuilder returnBuffer = new StringBuilder();
+		returnBuffer.append(length).append(",");
+		returnBuffer.append(facing).append(",");
+		returnBuffer.append(yxOrigin[0]).append(",");
+		returnBuffer.append(yxOrigin[1]).append(",");
+		returnBuffer.append(shipName).append(",");
+		returnBuffer.append(isSunk).append(",");
+
+		return returnBuffer.toString();
 	}
 	//only a marker should ever call this, but it will hit the ship at the given
 	//position and return true if this results in the ship being sunk

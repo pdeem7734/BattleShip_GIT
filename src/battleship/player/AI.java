@@ -19,7 +19,7 @@ public class AI extends Player{
 	
      //default constructor	
      public AI(){
-	    //initilize the array of ships
+	    //initialize the array of ships
 		//not sure i like this version of the constructor            
     	super();
      }
@@ -61,7 +61,7 @@ public class AI extends Player{
 		 if (!hitAndNotSunk) {
 			 newMove();
 		 } else {
-			 exsistingMove();
+			 existingMove();
 		 } 	 
      }
      
@@ -82,7 +82,7 @@ public class AI extends Player{
 				if ((tempShip = hostilePlayer.hitMarker(xPos, yPos)) != null){
 					 //this has hit a ship
 					 if (tempShip.isShipSunk()) hitAndNotSunk = false;
-					 else hitAndNotSunk = true;					
+					 else hitAndNotSunk = true;
 					 lastX = firstX = xPos;
 					 lastY = firstY = yPos;
 				}
@@ -96,13 +96,13 @@ public class AI extends Player{
      //simple check to see if all direction have been attempted for this move
      private boolean attemptedAll() {
     	 for (boolean dir: attemptedDirection){
-    		 if (dir == false) return false; 
+    		 if (!dir) return false;
     	 }
     	 return true;
      }
      
      //move logic for if the AI has hit a ship previously
-     private void exsistingMove() {
+     private void existingMove() {
     	 GUIShip tempShip;
     	 Random rand = new Random();
     	 boolean shotFailed = true; 

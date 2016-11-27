@@ -52,7 +52,7 @@ public class Human extends Player{
 			JInternalFrame shipPlacementFrame;
 			ArrayList<GUIShip> shipAL = new ArrayList<GUIShip>();
 			
-			int curentShip = 0;
+			int currentShip = 0;
 			int[] shipLengths = {6, 4, 3 ,3 ,2, 0};
 			boolean shipsPlaced = false;
 					
@@ -200,7 +200,7 @@ public class Human extends Player{
 				
 				
 				yLabel = new JLabel("Y Start: ");
-				shipLabel = new JLabel("Selection for ship of length: " + shipLengths[curentShip]);
+				shipLabel = new JLabel("Selection for ship of length: " + shipLengths[currentShip]);
 				holderLabel = new JLabel();				
 				yTextField = new JTextField();
 				yTextField.setText("1");
@@ -272,13 +272,13 @@ public class Human extends Player{
 			
 			private void updateGridPlacement() {
 				int[] temp = new int[] {Integer.parseInt(yTextField.getText()) - 1, Integer.parseInt(xTextField.getText()) - 1};
-				myBoard.highlightForPlacement(temp, GUIShip.Orientation.valueOf(orientButton.getText()), shipLengths[curentShip]);
+				myBoard.highlightForPlacement(temp, GUIShip.Orientation.valueOf(orientButton.getText()), shipLengths[currentShip]);
 			}
 			
 			//calls the players clear grid
 			public void clearGrid() {
 				clearBoard();
-				curentShip = 0;
+				currentShip = 0;
 				placeShipButton.setEnabled(true);
 				submitButton.setEnabled(false);
 				updateGridPlacement();
@@ -296,16 +296,16 @@ public class Human extends Player{
 					int[] temp = new int[] {Integer.parseInt(xTextField.getText()) - 1, Integer.parseInt(yTextField.getText()) - 1};
 					
 					//attempts to create and place the ship
-					GUIShip ship = new GUIShip(shipLengths[curentShip], 
+					GUIShip ship = new GUIShip(shipLengths[currentShip],
 							GUIShip.Orientation.valueOf(orientButton.getText()), temp , "Bob");
 					ship.placeShip(myBoard);
 					shipAL.add(ship);
 					
-					curentShip++;
-					shipLabel.setText("Selection for ship of length: " + shipLengths[curentShip]);			
+					currentShip++;
+					shipLabel.setText("Selection for ship of length: " + shipLengths[currentShip]);
 					
 					//if we have reached the end of the defined ships in the game. 
-					if (curentShip == 5) {
+					if (currentShip == 5) {
 						placeShipButton.setEnabled(false);
 						submitButton.setEnabled(true);
 					}
